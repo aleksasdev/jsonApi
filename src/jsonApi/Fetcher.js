@@ -17,16 +17,49 @@ export default class Fetcher{
    }
 
    async delete(){
-      if(!this.id){
-         console.error("No id provided");
-         return;
-      }
+      if(!this.isValidId()) return;
 
       const response = await fetch(`${this.url}/${this.id}`, {
          method: "DELETE",
       })
       
       this.handleResponse(response);
+   }
+
+   async put(body){
+      if(!this.isValidId()) return;
+
+      const response = await fetch(`${this.url}/${this.id}`, {
+         method: "PUT",
+         headers:{
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(body)
+      })
+
+      this.handleResponse(response);
+   }
+
+   async patch(body){
+      if(!this.isValidId()) return;
+
+      const response = await fetch(`${this.url}/${this.id}`, {
+         method: "PATCH",
+         headers:{
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(body)
+      })
+
+      this.handleResponse(response);
+   }
+
+   isValidId(){
+      if(!this.id){
+         console.error("No id provided or it's invalid");
+         return false;
+      }
+      return true;
    }
 
    handleResponse(response){
