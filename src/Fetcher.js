@@ -1,4 +1,4 @@
-export default class Fetcher{
+export class Fetcher{
    constructor(url, id){
       this.url = url;
       this.id = id;
